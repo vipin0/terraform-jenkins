@@ -10,13 +10,18 @@ pipeline{
                 sh "terraform init"
             }
         }
+        stage("Terraform plan"){
+            steps{
+                sh "terraform plan"
+            }
+        }
         stage("Terraform apply"){
             steps{
                 script {
                     env.APPROVE = input message: 'Terraform apply ', ok: 'Continue',
                                 parameters: [choice(name: 'Yes', choices: 'YES\nNO', description: 'Approve terraform apply ?')]
                 if (env.APPROVE == 'YES'){
-                    sh "terraform apply --auto-approve"
+                    sh 'terraform apply --auto-approve -var region="us-east-1"'
                 }else{
                     echo "Deployment failed!"
                 }
