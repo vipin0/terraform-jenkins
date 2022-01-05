@@ -3,6 +3,11 @@
 pipeline{
     agent any
 
+    environment {
+        REGION = 'us-east-1'
+        DB_ENGINE    = 'sqlite'
+    }
+
     stages{
         stage("Terraform init"){
             steps{
@@ -12,7 +17,7 @@ pipeline{
         }
         stage("Terraform plan"){
             steps{
-                sh 'terraform plan -var region="us-east-1"'
+                sh('terraform plan -var region="$REGION"')
             }
         }
         stage("Terraform apply"){
@@ -21,7 +26,7 @@ pipeline{
                     env.APPROVE = input message: 'Terraform apply ', ok: 'Continue',
                                 parameters: [choice(name: 'Yes', choices: 'YES\nNO', description: 'Approve terraform apply ?')]
                 if (env.APPROVE == 'YES'){
-                    sh 'terraform apply --auto-approve -var region="us-east-1"'
+                    sh ('terraform apply --auto-approve -var region="$REGION"')
                 }else{
                     echo "Deployment failed!"
                 }
