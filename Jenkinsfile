@@ -5,7 +5,6 @@ pipeline{
 
     environment {
         REGION = 'us-east-1'
-        DB_ENGINE    = 'sqlite'
     }
 
     stages{
