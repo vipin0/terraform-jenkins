@@ -12,7 +12,7 @@ pipeline{
         }
         stage("Terraform plan"){
             steps{
-                sh "terraform plan"
+                sh 'terraform plan -var region="us-east-1"'
             }
         }
         stage("Terraform apply"){
