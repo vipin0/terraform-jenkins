@@ -29,7 +29,7 @@ pipeline{
                 if (env.APPROVE == 'YES'){
                     sh ('terraform apply --auto-approve -var region="$REGION" -var access_key="$AWS_ACCESS_KEY_ID" -var secret_key="$AWS_ACCESS_SECRET_KEY"')
                 }else{
-                    echo "Deployment failed!"
+                    echo "Deployment Cancelled!!"
                 }
             }
             }
