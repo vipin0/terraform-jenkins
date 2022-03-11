@@ -3,14 +3,14 @@ variable "region" {
   description = "Aws region."
   default = "us-east-1"
 }
-# variable "access_key" {
-#   type = string
-#   description = "Aws access key id"
-# }
-# variable "secret_key" {
-#   type = string
-#   description = "Aws secret key"
-# }
+variable "access_key" {
+  type = string
+  description = "Aws access key id"
+}
+variable "secret_key" {
+  type = string
+  description = "Aws secret key"
+}
 
 variable "default_tags" {
   type = map
