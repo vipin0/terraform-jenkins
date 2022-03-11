@@ -25,6 +25,7 @@ variable "default_tags" {
  variable "instance_ingress_ports" {
    type = list(string)
    description = "ingress port for instance"
+   default = [ ]
  }
  variable "associate_public_ip_address" {
   description = "Assign public IP address to instances"
