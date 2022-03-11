@@ -23,15 +23,18 @@ pipeline{
         }
         stage("Terraform apply"){
             steps{
+                emailext body: '''Review terraform apply
+                    ''', subject: 'Review Terraform Apply', to: 'vipin6673@gmail.com'
                 script {
+
                     env.APPROVE = input message: 'Terraform apply ', ok: 'Continue',
                                 parameters: [choice(name: 'Yes', choices: 'YES\nNO', description: 'Approve terraform apply ?')]
-                if (env.APPROVE == 'YES'){
-                    sh ('terraform apply --auto-approve -var region="$REGION" -var access_key="$AWS_ACCESS_KEY_ID" -var secret_key="$AWS_ACCESS_SECRET_KEY"')
-                }else{
-                    echo "Deployment Cancelled!!"
+                    if (env.APPROVE == 'YES'){
+                        sh ('terraform apply --auto-approve -var region="$REGION" -var access_key="$AWS_ACCESS_KEY_ID" -var secret_key="$AWS_ACCESS_SECRET_KEY"')
+                    }else{
+                        echo "Deployment Cancelled!!"
+                    }
                 }
-            }
             }
         }
     }
