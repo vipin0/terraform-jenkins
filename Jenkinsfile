@@ -6,8 +6,7 @@ pipeline{
     environment {
         AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
         AWS_ACCESS_SECRET_KEY = credentials('aws_secret_access_key')
-        KEY_NAME = credentials('aws-kp')
-        REGION = 'us-east-1'
+        VAR_FILE = credentials('terraform-variables')
     }
 
     stages{
@@ -19,7 +18,7 @@ pipeline{
         }
         stage("Terraform plan"){
             steps{
-                sh('terraform plan -var region="$REGION" -var key_name="$KEY_NAME"')
+                sh('terraform plan --var-file="$VAR_FILE"')
             }
         }
         stage("Terraform apply"){
@@ -31,7 +30,8 @@ pipeline{
                     env.APPROVE = input message: 'Terraform apply ', ok: 'Continue',
                                 parameters: [choice(name: 'Yes', choices: 'YES\nNO', description: 'Approve terraform apply ?')]
                     if (env.APPROVE == 'YES'){
-                        sh ('terraform apply --auto-approve -var region="$REGION" -var key_name="$KEY_NAME"')
+                        // sh ('terraform apply --auto-approve -var region="$REGION" -var key_name="$KEY_NAME"')
+                        sh ('terraform apply --auto-approve --var-file="$VAR_FILE"')
                     }else{
                         echo "Deployment Cancelled!!"
                     }
