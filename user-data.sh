@@ -5,4 +5,4 @@ sudo yum install -y httpd
 sudo systemctl start httpd
 sudo systemctl enable httpd
 
-echo "Hello from $(curl ifconfig.me)" >> /var/www/html/index.html
+echo "<h1>Hello from $(curl ifconfig.me)</h1>" >> /var/www/html/index.html
